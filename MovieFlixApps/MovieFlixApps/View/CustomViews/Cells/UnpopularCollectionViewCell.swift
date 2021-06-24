@@ -1,5 +1,5 @@
 //
-//  PopularCollectionViewCell.swift
+//  UnpopularCollectionViewCell.swift
 //  MovieFlixApps
 //
 //  Created by Tim on 24/06/2021.
@@ -7,45 +7,45 @@
 
 import UIKit
 
-let imageCache = NSCache<AnyObject, AnyObject>.sharedInstance
-
-
-class PopularCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var parentView: UIView!
-    @IBOutlet weak var popularImageView: UIImageView!
+class UnpopularCollectionViewCell: UICollectionViewCell {
+    
+    @IBOutlet weak var imageParentView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var overViewLbl: UILabel!
     
     private var downloadTask: URLSessionDownloadTask?
-    
-    let identifier: String = String(describing: PopularCollectionViewCell.self)
+    let identifier: String = String(describing: UnpopularCollectionViewCell.self)
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupParentView()
+        setupImageView()
     }
     
-    var popular: MovieResultModel? {
+    var unpopular: MovieResultModel? {
         didSet {
-            if let popular = popular {
-                let baseMovieUrl = "https://image.tmdb.org/t/p/original"
-                let backdropPath = popular.backdropPath
-                let appendedString = "\(baseMovieUrl)\(backdropPath)"
+            if let unpopular = unpopular {
+                let baseMovieUrl = Api.posterPathBaseUrl
+                let posterPath = unpopular.posterPath
+                let appendedString = "\(baseMovieUrl)\(posterPath)"
                 let fileUrl = URL(string: appendedString)
                 self.downloadItemImageForSearchResult(imageURL: fileUrl)
+                titleLbl.text = unpopular.title
+                overViewLbl.text = unpopular.overview
             }
         }
     }
     
-    func setupParentView() {
-        parentView.layer.cornerRadius = 20
-        parentView.layer.masksToBounds = true
+    func setupImageView() {
+        imageView.layer.cornerRadius = 20
     }
     
     public func downloadItemImageForSearchResult(imageURL: URL?) {
         
         if let urlOfImage = imageURL {
             if let cachedImage = imageCache.object(forKey: urlOfImage.absoluteString as NSString){
-                self.popularImageView!.image = cachedImage as? UIImage
+                self.imageView!.image = cachedImage as? UIImage
             } else {
                 let session = URLSession.shared
                 self.downloadTask = session.downloadTask(
@@ -53,7 +53,7 @@ class PopularCollectionViewCell: UICollectionViewCell {
                         if error == nil, let url = url, let data = NSData(contentsOf: url), let image = UIImage(data: data as Data) {
                             DispatchQueue.main.async() {
                                 let imageToCache = image
-                                if let strongSelf = self, let imageView = strongSelf.popularImageView {
+                                if let strongSelf = self, let imageView = strongSelf.imageView {
                                     imageView.image = imageToCache
                                     imageCache.setObject(imageToCache, forKey: urlOfImage.absoluteString as NSString , cost: 1)
                                 }
@@ -69,11 +69,11 @@ class PopularCollectionViewCell: UICollectionViewCell {
     
     override public func prepareForReuse() {
         self.downloadTask?.cancel()
-        popularImageView?.image = UIImage(named: "ImagePlaceholder")
+        imageView?.image = UIImage(named: "ImagePlaceholder")
     }
     
     deinit {
         self.downloadTask?.cancel()
-        popularImageView?.image = nil
+        imageView?.image = nil
     }
 }

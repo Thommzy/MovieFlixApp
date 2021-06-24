@@ -53,7 +53,9 @@
                             <constraint firstItem="fNv-8K-Ew0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Dja-dc-ld6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="MovieFlixApp" id="dhn-ad-vsG"/>
+                    <navigationItem key="navigationItem" title="MovieFlixApp" id="dhn-ad-vsG">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Sof-Bb-oC2"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="movieListCollectionView" destination="k90-7H-Swo" id="6f3-PO-dIE"/>
                     </connections>
@@ -61,6 +63,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="957.97101449275374" y="78.348214285714278"/>
+        </scene>
+        <!--Detailed View Controller-->
+        <scene sceneID="mtD-hC-e6W">
+            <objects>
+                <viewController storyboardIdentifier="DetailedViewController" id="QeG-si-Drs" customClass="DetailedViewController" customModule="MovieFlixApps" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A7Y-Ye-Pfd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dhk-GJ-Yas">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IRG-u3-T2l">
+                                        <rect key="frame" x="20" y="100" width="374" height="756"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="IRG-u3-T2l" secondAttribute="trailing" constant="20" id="9Kg-0l-Rks"/>
+                                    <constraint firstItem="IRG-u3-T2l" firstAttribute="leading" secondItem="Dhk-GJ-Yas" secondAttribute="leading" constant="20" id="AG2-jN-165"/>
+                                    <constraint firstAttribute="bottom" secondItem="IRG-u3-T2l" secondAttribute="bottom" constant="40" id="KDE-U6-EIq"/>
+                                    <constraint firstItem="IRG-u3-T2l" firstAttribute="top" secondItem="Dhk-GJ-Yas" secondAttribute="top" constant="100" id="VZy-kw-VLs"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="iyc-AY-JqN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Dhk-GJ-Yas" firstAttribute="leading" secondItem="iyc-AY-JqN" secondAttribute="leading" id="3LQ-IC-8GV"/>
+                            <constraint firstItem="Dhk-GJ-Yas" firstAttribute="trailing" secondItem="iyc-AY-JqN" secondAttribute="trailing" id="Fxt-e0-sNc"/>
+                            <constraint firstAttribute="bottom" secondItem="Dhk-GJ-Yas" secondAttribute="bottom" id="UTa-0a-iFz"/>
+                            <constraint firstItem="Dhk-GJ-Yas" firstAttribute="top" secondItem="A7Y-Ye-Pfd" secondAttribute="top" id="oAZ-0E-EHj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="IRG-u3-T2l" id="BlN-ur-Lyr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kkd-5w-VaS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2002.8985507246377" y="77.678571428571431"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tfe-kM-JUH">
@@ -70,6 +113,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="C8T-hX-I0j">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="labelColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -82,6 +126,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
