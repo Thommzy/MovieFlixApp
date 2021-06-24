@@ -6,32 +6,49 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class HomeViewController: UIViewController {
-    
     @IBOutlet weak var movieListCollectionView: UICollectionView!
+    
+    let movieDataViewModel = MovieDataViewModel(dataService: DataService.shared)
+    var disposedBag = DisposeBag()
+    var globalBackdropArray: [MovieResultModel?] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupMovieDataResults()
         setupMovieListCollectionView()
+    }
+    
+    func setupMovieDataResults() {
+        movieDataViewModel.movieResult.asObservable()
+            .subscribe(onNext: { [unowned self]
+                result in
+                //print(result?.results.map{$0?.posterPath}, "<<<<<<>>>>")
+                globalBackdropArray = result?.results.map{$0} ?? [MovieResultModel]()
+                movieListCollectionView.reloadData()
+            })
+            .disposed(by: disposedBag)
+        movieDataViewModel.getMovieData()
     }
     
     func setupMovieListCollectionView() {
         movieListCollectionView.register(UINib(nibName: PopularCollectionViewCell().identifier, bundle: nil), forCellWithReuseIdentifier: PopularCollectionViewCell().identifier)
-        
     }
     
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return globalBackdropArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell().identifier, for: indexPath) as? PopularCollectionViewCell
-        //cell?.placeMediaAndNameData(imgData:imageArray[indexPath.item])
+        cell?.popular = globalBackdropArray[indexPath.row]
         cell?.layoutIfNeeded()
         return cell!
     }

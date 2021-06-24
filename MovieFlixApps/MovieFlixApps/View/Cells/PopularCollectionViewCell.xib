@@ -19,7 +19,23 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHZ-sx-e4V">
                         <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AHc-Ib-ZLB">
+                                <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oEW-wT-DaQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="AHc-Ib-ZLB" secondAttribute="bottom" id="1Je-h2-gix"/>
+                            <constraint firstAttribute="trailing" secondItem="AHc-Ib-ZLB" secondAttribute="trailing" id="OeS-MQ-gUy"/>
+                            <constraint firstItem="AHc-Ib-ZLB" firstAttribute="top" secondItem="wHZ-sx-e4V" secondAttribute="top" id="wIO-Yq-t0A"/>
+                            <constraint firstItem="AHc-Ib-ZLB" firstAttribute="leading" secondItem="wHZ-sx-e4V" secondAttribute="leading" id="z8B-wX-NGe"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -33,6 +49,7 @@
             <size key="customSize" width="268" height="183"/>
             <connections>
                 <outlet property="parentView" destination="wHZ-sx-e4V" id="Xhp-zb-U8P"/>
+                <outlet property="popularImageView" destination="oEW-wT-DaQ" id="2ZT-kg-Gum"/>
             </connections>
             <point key="canvasLocation" x="-130.43478260869566" y="15.066964285714285"/>
         </collectionViewCell>
