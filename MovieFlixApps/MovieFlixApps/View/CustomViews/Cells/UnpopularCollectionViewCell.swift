@@ -7,12 +7,19 @@
 
 import UIKit
 
+protocol UnpopularCollectionViewCellDelegate: AnyObject {
+    func unpopularDeleteBtnTapped(cell: UnpopularCollectionViewCell)
+}
+
 class UnpopularCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageParentView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var overViewLbl: UILabel!
+    
+    
+    var delegate: UnpopularCollectionViewCellDelegate?
     
     private var downloadTask: URLSessionDownloadTask?
     let identifier: String = String(describing: UnpopularCollectionViewCell.self)
@@ -75,5 +82,9 @@ class UnpopularCollectionViewCell: UICollectionViewCell {
     deinit {
         self.downloadTask?.cancel()
         imageView?.image = nil
+    }
+    
+    @IBAction func deleteBtnTapped(_ sender: UIButton) {
+        delegate?.unpopularDeleteBtnTapped(cell: self)
     }
 }

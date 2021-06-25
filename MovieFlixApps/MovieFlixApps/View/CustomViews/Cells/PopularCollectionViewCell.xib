@@ -20,12 +20,35 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHZ-sx-e4V">
                         <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AHc-Ib-ZLB">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AHc-Ib-ZLB">
                                 <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oEW-wT-DaQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="268" height="183"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="238" height="183"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZA0-dk-NLo">
+                                        <rect key="frame" x="238" y="0.0" width="30" height="183"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xGv-Cn-QaV">
+                                                <rect key="frame" x="2.5" y="79" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="E89-lY-nvr"/>
+                                                    <constraint firstAttribute="height" constant="25" id="cjC-PX-AaD"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <state key="normal" image="trash.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="deleteBtnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="PcE-Fv-IjN"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="xGv-Cn-QaV" firstAttribute="centerY" secondItem="ZA0-dk-NLo" secondAttribute="centerY" id="iXd-Qr-poB"/>
+                                            <constraint firstItem="xGv-Cn-QaV" firstAttribute="centerX" secondItem="ZA0-dk-NLo" secondAttribute="centerX" id="ss6-UT-Y89"/>
+                                            <constraint firstAttribute="width" constant="30" id="vNK-Js-NUR"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -48,6 +71,7 @@
             </constraints>
             <size key="customSize" width="268" height="183"/>
             <connections>
+                <outlet property="deleteBtn" destination="xGv-Cn-QaV" id="pfV-DB-sSI"/>
                 <outlet property="parentView" destination="wHZ-sx-e4V" id="Xhp-zb-U8P"/>
                 <outlet property="popularImageView" destination="oEW-wT-DaQ" id="2ZT-kg-Gum"/>
             </connections>
@@ -55,6 +79,10 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="trash.fill" catalog="system" width="121" height="128"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

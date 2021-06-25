@@ -7,15 +7,22 @@
 
 import UIKit
 
+protocol PopularCollectionViewCellDelegate: AnyObject {
+    func popularDeleteBtnTapped(cell: PopularCollectionViewCell)
+}
+
 let imageCache = NSCache<AnyObject, AnyObject>.sharedInstance
 
 class PopularCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var popularImageView: UIImageView!
+    @IBOutlet weak var deleteBtn: UIButton!
+    
+    var delegate: PopularCollectionViewCellDelegate?
     
     private var downloadTask: URLSessionDownloadTask?
     let identifier: String = String(describing: PopularCollectionViewCell.self)
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -35,8 +42,8 @@ class PopularCollectionViewCell: UICollectionViewCell {
     }
     
     func setupParentView() {
-        parentView.layer.cornerRadius = 20
-        parentView.layer.masksToBounds = true
+        popularImageView.layer.cornerRadius = 20
+        popularImageView.layer.masksToBounds = true
     }
     
     public func downloadItemImageForSearchResult(imageURL: URL?) {
@@ -73,5 +80,10 @@ class PopularCollectionViewCell: UICollectionViewCell {
     deinit {
         self.downloadTask?.cancel()
         popularImageView?.image = nil
+    }
+    
+    
+    @IBAction func deleteBtnAction(_ sender: UIButton) {
+        delegate?.popularDeleteBtnTapped(cell: self)
     }
 }

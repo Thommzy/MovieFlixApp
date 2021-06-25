@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,8 +20,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fNv-8K-Ew0">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MmJ-M1-OyL">
+                                        <rect key="frame" x="20" y="0.0" width="354" height="60"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9qv-j4-jwJ">
+                                                <rect key="frame" x="20" y="0.0" width="314" height="60"/>
+                                                <color key="textColor" name="DefaultTextColor"/>
+                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="19"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="1Ih-aE-swp"/>
+                                            <constraint firstItem="9qv-j4-jwJ" firstAttribute="leading" secondItem="MmJ-M1-OyL" secondAttribute="leading" constant="20" id="NAd-V4-IYb"/>
+                                            <constraint firstAttribute="bottom" secondItem="9qv-j4-jwJ" secondAttribute="bottom" id="gEt-uA-oR2"/>
+                                            <constraint firstItem="9qv-j4-jwJ" firstAttribute="top" secondItem="MmJ-M1-OyL" secondAttribute="top" id="iaX-tc-OlC"/>
+                                            <constraint firstAttribute="trailing" secondItem="9qv-j4-jwJ" secondAttribute="trailing" constant="20" id="kdi-9c-tg6"/>
+                                        </constraints>
+                                    </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k90-7H-Swo">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
+                                        <rect key="frame" x="0.0" y="68" width="414" height="706"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TYj-HY-lJf">
                                             <size key="itemSize" width="128" height="128"/>
@@ -37,7 +57,10 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="k90-7H-Swo" firstAttribute="top" secondItem="fNv-8K-Ew0" secondAttribute="top" id="Apf-Ii-ERZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="MmJ-M1-OyL" secondAttribute="trailing" constant="40" id="3f2-lD-4f3"/>
+                                    <constraint firstItem="k90-7H-Swo" firstAttribute="top" secondItem="fNv-8K-Ew0" secondAttribute="top" constant="68" id="Apf-Ii-ERZ"/>
+                                    <constraint firstItem="MmJ-M1-OyL" firstAttribute="top" secondItem="fNv-8K-Ew0" secondAttribute="top" id="G4b-Xn-C5n"/>
+                                    <constraint firstItem="MmJ-M1-OyL" firstAttribute="leading" secondItem="fNv-8K-Ew0" secondAttribute="leading" constant="20" id="dIR-j3-KaD"/>
                                     <constraint firstItem="k90-7H-Swo" firstAttribute="leading" secondItem="fNv-8K-Ew0" secondAttribute="leading" id="jdL-1f-CFm"/>
                                     <constraint firstAttribute="trailing" secondItem="k90-7H-Swo" secondAttribute="trailing" id="m2K-a5-LQ2"/>
                                     <constraint firstAttribute="bottom" secondItem="k90-7H-Swo" secondAttribute="bottom" id="vng-pa-WPt"/>
@@ -58,6 +81,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="movieListCollectionView" destination="k90-7H-Swo" id="6f3-PO-dIE"/>
+                        <outlet property="txtField" destination="9qv-j4-jwJ" id="5IS-ue-enW"/>
+                        <outlet property="txtFieldParentView" destination="MmJ-M1-OyL" id="PAD-8f-L1j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -103,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kkd-5w-VaS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2002.8985507246377" y="77.678571428571431"/>
+            <point key="canvasLocation" x="1806" y="78"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tfe-kM-JUH">
@@ -126,6 +151,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="DefaultTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

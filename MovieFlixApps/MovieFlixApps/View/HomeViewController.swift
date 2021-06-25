@@ -7,80 +7,80 @@
 
 import UIKit
 import RxSwift
-import RxCocoa
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var movieListCollectionView: UICollectionView!
-    
+    @IBOutlet weak var txtFieldParentView: UIView!
+    @IBOutlet weak var txtField: UITextField!
     let movieDataViewModel = MovieDataViewModel(dataService: DataService.shared)
     var disposedBag = DisposeBag()
     var movieResultArray: [MovieResultModel?] = []
+    var backupMovieResultArray: [MovieResultModel?] = []
+    var selectedCell: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupMovieDataResults()
         setupMovieListCollectionView()
+        setupTxtFieldParentView()
     }
-    
+
+    func setupTxtFieldParentView() {
+        txtFieldParentView.layer.cornerRadius = 20
+        txtFieldParentView.backgroundColor = .systemGray3
+        let bar = UIToolbar()
+        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneTapped))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        bar.backgroundColor = .systemBackground
+        bar.setItems([flexibleSpace, done], animated: false)
+        bar.tintColor = .label
+        bar.sizeToFit()
+        txtField.inputAccessoryView = bar
+        txtField.tintColor = .label
+        txtField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
+    }
     func setupMovieDataResults() {
         movieDataViewModel.movieResult.asObservable()
             .subscribe(onNext: { [unowned self]
                 result in
                 movieResultArray = result?.results.map{$0} ?? [MovieResultModel]()
+                backupMovieResultArray = result?.results.map{$0} ?? [MovieResultModel]()
                 movieListCollectionView.reloadData()
             })
             .disposed(by: disposedBag)
         movieDataViewModel.getMovieData()
     }
-    
     func setupMovieListCollectionView() {
         movieListCollectionView.register(UINib(nibName: PopularCollectionViewCell().identifier, bundle: nil), forCellWithReuseIdentifier: PopularCollectionViewCell().identifier)
         movieListCollectionView.register(UINib(nibName: UnpopularCollectionViewCell().identifier, bundle: nil), forCellWithReuseIdentifier: UnpopularCollectionViewCell().identifier)
     }
     
-}
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieResultArray.count
+    @objc func doneTapped() {
+        view.endEditing(true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if movieResultArray[indexPath.row]?.voteAverage ?? Double() > 7.0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell().identifier, for: indexPath) as? PopularCollectionViewCell
-            cell?.popular = movieResultArray[indexPath.row]
-            cell?.layoutIfNeeded()
-            return cell!
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let contentArray = backupMovieResultArray
+        guard let text = textField.text?.lowercased() else { return  }
+        var movieDetails: [MovieResultModel?] = []
+        if !text.isEmpty {
+            var i = 0
+            while i < contentArray.count {
+                let fullName = contentArray[i]?.title.lowercased()
+                if fullName?.range(of:text) != nil {
+                    movieDetails.append(contentArray[i])
+                } else {
+                    print("do Nothing")
+                }
+                i += 1
+            }
+            movieResultArray = movieDetails
+            movieListCollectionView.reloadData()
+        } else {
+            movieResultArray = backupMovieResultArray
+            movieListCollectionView.reloadData()
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UnpopularCollectionViewCell().identifier, for: indexPath) as? UnpopularCollectionViewCell
-        cell?.unpopular = movieResultArray[indexPath.row]
-        cell?.layoutIfNeeded()
-        return cell!
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let detailedVc = storyboard.instantiateViewController(withIdentifier: "DetailedViewController") as! DetailedViewController
-        detailedVc.movieData = movieResultArray[indexPath.row]
-        self.navigationController?.pushViewController(detailedVc, animated: true)
-    }
-}
-
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width - 30, height: 230)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
     }
 }
